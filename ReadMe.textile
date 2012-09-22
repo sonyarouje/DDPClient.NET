@@ -1,0 +1,106 @@
+
+*DDP Client for .NET*
+
+DDPClient.NET is a library to connect to DDP server. DDP is the protocol used in Meteor. Using DDPClient.NET you can subscribe to published items or call a Meteor method and display the same in your ASP.NET or Desktop applications.
+
+
+*How to Subscribe to a published item*
+
+It is very easy with the help of DDPClient.NET. See the code below.
+
+<pre><code>
+	static void Main(string[] args)
+	{
+		IDataSubscriber subscriber = new Subscriber();
+		DDPClient client = new DDPClient(sub);
+
+		client.Connect("localhost:3000");
+		client.Subscribe("allproducts");
+	}
+	
+    public class Subscriber:IDataSubscriber
+    {
+        public void DataReceived(dynamic data)
+        {
+            try
+            {
+                if (data.type == "sub")
+                {
+                    Console.WriteLine(data.prodCode + ": " + data.prodName + ": collection: " + data.collection);
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+    }		
+	
+</code></pre>
+
+As you can see in the main function, I specified the url where my Meteor application is running. Then I subscribed to 'appproducts', which I Published in my Meteor application as shown below.
+
+<pre><code>
+	if(Meteor.is_server)
+	{
+		Meteor.publish("allproducts", function(){
+			return Products.find();
+		});
+	}
+</code></pre>
+
+I used a console application here to demonstrate how to use DDPClient.NET. If you run the console application it will write all the items in the Products to the console. Also the console will show product in realtime if any new products inserted to the database.
+
+*How to call a method*
+
+Let's see how to invoke a method in Meteor.
+
+<pre><code>
+	static void Main(string[] args)
+	{
+		IDataSubscriber subscriber = new Subscriber();
+		DDPClient client = new DDPClient(sub);
+
+		client.Connect("localhost:3000");
+		client.Call("addProduct", "NS5", "IRobot");
+	}
+	
+    public class Subscriber:IDataSubscriber
+    {
+        public void DataReceived(dynamic data)
+        {
+            try
+            {
+                if (data.type == "method")
+                    Console.WriteLine(data.result);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+    }		
+</code></pre>
+
+As you can see I am invoking a method called 'addProduct' with two parameters. See the meteor code below, as you can see addProduct accepts two parameters prodCode and prodDesc.
+
+<pre><code>
+if(Meteor.is_server)
+{
+    Meteor.publish("allproducts", function(){
+        return Products.find();
+    });
+
+    Meteor.methods({
+        addProduct: function (prodCode, prodDesc) {
+            return "Product Name: " + prodDesc + " Product Code: " + prodCode;
+        },
+
+        bar: function () {
+            return "baz";
+        }
+    });
+}
+</code></pre>
+
+

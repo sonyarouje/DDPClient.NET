@@ -11,8 +11,8 @@ namespace Net.DDP.Client.Test
     {
         static void Main(string[] args)
         {
-            Subscriber sub = new Subscriber();
-            DDPClient client = new DDPClient(sub);
+            IDataSubscriber subscriber = new Subscriber();
+            DDPClient client = new DDPClient(subscriber);
 
             client.Connect("localhost:3000");
             client.Subscribe("allproducts");
