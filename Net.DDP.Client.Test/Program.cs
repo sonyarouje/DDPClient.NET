@@ -5,18 +5,21 @@ using System.Text;
 using Net.DDP.Client;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Linq;
+using Net.DDP.SignalR;
 namespace Net.DDP.Client.Test
 {
     class Program
     {
         static void Main(string[] args)
         {
-            IDataSubscriber subscriber = new Subscriber();
-            DDPClient client = new DDPClient(subscriber);
+            DDPHost host = new DDPHost("http://localhost:8081/", "localhost:3000");
+            host.Start();
+            //IDataSubscriber subscriber = new Subscriber();
+            //DDPClient client = new DDPClient(subscriber);
 
-            client.Connect("localhost:3000");
-            client.Subscribe("allproducts");
-            client.Call("foo", "code", "Passed product");
+            //client.Connect("localhost:3000");
+            //client.Subscribe("allproducts");
+            //client.Call("addProduct", "code", "Passed product");
             Console.ReadLine();
         }
 

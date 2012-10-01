@@ -54,6 +54,10 @@
       <Project>{2A0410D6-7916-4EFA-8653-A750D7C88047}</Project>
       <Name>Net.DDP.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Net.DDP.SignalR\Net.DDP.SignalR.csproj">
+      <Project>{BCF36A36-A689-4892-97DA-1CBF642A08B4}</Project>
+      <Name>Net.DDP.SignalR</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

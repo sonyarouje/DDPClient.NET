@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 namespace Net.DDP.Client
 {
-    public class DDPConnector
+    internal class DDPConnector
     {
         private WebSocket _socket;
         private string _url=string.Empty;

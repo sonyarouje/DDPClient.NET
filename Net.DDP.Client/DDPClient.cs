@@ -22,7 +22,6 @@ namespace Net.DDP.Client
         public void AddItem(string jsonItem)
         {
             _queueHandler.AddItem(jsonItem);
-            Console.WriteLine(jsonItem);
         }
 
         public void Connect(string url)

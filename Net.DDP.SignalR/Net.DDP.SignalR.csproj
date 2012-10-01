@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2A0410D6-7916-4EFA-8653-A750D7C88047}</ProjectGuid>
+    <ProjectGuid>{BCF36A36-A689-4892-97DA-1CBF642A08B4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Net.DDP.Client</RootNamespace>
-    <AssemblyName>Net.DDP.Client</AssemblyName>
+    <RootNamespace>Net.DDP.SignalR</RootNamespace>
+    <AssemblyName>Net.DDP.SignalR</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,8 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json">
       <HintPath>..\Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalR">
+      <HintPath>..\Lib\SignalR.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalR.Hosting.Common">
+      <HintPath>..\Lib\SignalR.Hosting.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalR.Hosting.Self">
+      <HintPath>..\Lib\SignalR.Hosting.Self.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,18 +50,19 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebSocket4Net">
-      <HintPath>..\..\Lib\WebSocket4Net.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DDPClient.cs" />
-    <Compile Include="DDPConnector.cs" />
-    <Compile Include="IClient.cs" />
-    <Compile Include="IDataSubscriber.cs" />
-    <Compile Include="JsonDeserializeHelper.cs" />
+    <Compile Include="DataSubscriber.cs" />
+    <Compile Include="DDPStreamWriter.cs" />
+    <Compile Include="DDPHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultQueue.cs" />
+    <Compile Include="SingletonDDPClient.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Net.DDP.Client\Net.DDP.Client.csproj">
+      <Project>{2A0410D6-7916-4EFA-8653-A750D7C88047}</Project>
+      <Name>Net.DDP.Client</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
