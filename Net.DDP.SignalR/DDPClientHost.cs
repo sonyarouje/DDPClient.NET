@@ -7,7 +7,7 @@ using SignalR.Hosting.Self;
 using SignalR.Hubs;
 namespace Net.DDP.SignalR
 {
-    public class DDPHost
+    public class DDPClientHost
     {
         private string _listenToUrl;
         private string _meteorServerUrl;
@@ -17,7 +17,7 @@ namespace Net.DDP.SignalR
         /// </summary>
         /// <param name="listenToUrl">will be the url other .net clients will connect and get the notifications</param>
         /// <param name="meteorServerUrl">url where meteor server application is running</param>
-        public DDPHost(string listenToUrl, string meteorServerUrl)
+        public DDPClientHost(string listenToUrl, string meteorServerUrl)
         {
             _listenToUrl = listenToUrl;
             _meteorServerUrl = meteorServerUrl;

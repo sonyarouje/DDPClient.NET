@@ -53,8 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataSubscriber.cs" />
-    <Compile Include="DDPStreamWriter.cs" />
-    <Compile Include="DDPHost.cs" />
+    <Compile Include="DDPStream.cs" />
+    <Compile Include="DDPClientHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SingletonDDPClient.cs" />
   </ItemGroup>

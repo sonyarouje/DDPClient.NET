@@ -7,24 +7,8 @@
    <script type="text/javascript">
 
        $(function () {
-           //           jQuery.support.cors = true;
-           //           $.connection.hub.url = 'http://localhost:8081/signalr/';
-           //           var collectionH = $.connection.collectionhub;
-
-           //           $.connection.hub.start({ transport: 'longPolling', xdomain: true })
-           //                    .done(function () { alert("Now connected!"); })
-           //                    .fail(function () { alert("Could not Connect!"); });
-           //           collectionH.subscribe("Product")
-           //                    .done(function () { alert("Now subscribed to product!"); })
-           //                    .fail(function () { alert("Could not Connect to Product!"); });
-
-           //           collectionH.publish = function (data) {
-           //               $('#messages').append('<li>' + data + '</li>');
-           //           };
-
-
            var connection = $.hubConnection('http://localhost:8081/');
-           proxy = connection.createProxy('DDPStreamWriter')
+           proxy = connection.createProxy('DDPStream')
            connection.start()
                     .done(function () {
                         proxy.invoke('subscribe', 'allproducts','product');
@@ -36,6 +20,7 @@
                     proxy.on('flush', function (msg) {
                         $('#messages').append('<li>' + msg.prodName + '</li>');
                     });
+                    
 
        });
     </script>

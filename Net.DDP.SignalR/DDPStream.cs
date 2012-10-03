@@ -8,15 +8,15 @@ using SignalR.Hubs;
 using SignalR.Hosting;
 namespace Net.DDP.SignalR
 {
-    public class DDPStreamWriter:Hub
+    public class DDPStream:Hub
     {
-        private static DDPStreamWriter _lastListenerInstance;
-        public DDPStreamWriter()
+        private static DDPStream _lastListenerInstance;
+        public DDPStream()
         {
             _lastListenerInstance = this;
         }
 
-        internal static DDPStreamWriter GetLastInstance()
+        internal static DDPStream GetLastInstance()
         {
             return _lastListenerInstance;
         }

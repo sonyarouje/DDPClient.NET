@@ -12,17 +12,10 @@ namespace Net.DDP.Client.Test
     {
         static void Main(string[] args)
         {
-            DDPHost host = new DDPHost("http://localhost:8081/", "localhost:3000");
+            DDPClientHost host = new DDPClientHost("http://localhost:8081/", "localhost:3000");
             host.Start();
-            //IDataSubscriber subscriber = new Subscriber();
-            //DDPClient client = new DDPClient(subscriber);
-
-            //client.Connect("localhost:3000");
-            //client.Subscribe("allproducts");
-            //client.Call("addProduct", "code", "Passed product");
             Console.ReadLine();
         }
-
     }
 
     public class Subscriber:IDataSubscriber

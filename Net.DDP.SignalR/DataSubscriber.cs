@@ -9,7 +9,7 @@ namespace Net.DDP.SignalR
     {
         public void DataReceived(dynamic data)
         {
-            DDPStreamWriter.GetLastInstance().Publish(data);
+            DDPStream.GetLastInstance().Publish(data);
         }
     }
 }
