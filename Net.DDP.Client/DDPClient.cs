@@ -36,11 +36,12 @@ namespace Net.DDP.Client
             _connector.Send(message);
         }
 
-        public void Subscribe(string subscribeTo, params string[] args)
+        public int Subscribe(string subscribeTo, params string[] args)
         {
             string message = string.Format("\"msg\": \"sub\",\"name\": \"{0}\",\"params\": [{1}],\"id\": \"{2}\"", subscribeTo,this.CreateJSonArray(args), this.NextId().ToString());
             message = "{" + message + "}";
             _connector.Send(message);
+            return this.GetCurrentRequestId();
         }
 
         private string CreateJSonArray(params string[] args)
