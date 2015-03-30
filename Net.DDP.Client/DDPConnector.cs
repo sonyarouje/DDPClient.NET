@@ -10,7 +10,7 @@ namespace Net.DDP.Client
     internal class DDPConnector
     {
         private WebSocket _socket;
-        private string _url=string.Empty;
+        private string _url = string.Empty;
         private int _isWait = 0;
         private IClient _client;
 
@@ -23,11 +23,11 @@ namespace Net.DDP.Client
         {
             _url = "ws://" + url + "/websocket";
             _socket = new WebSocket(_url);
-            _socket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(socket_MessageReceived);
+            _socket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(_socket_MessageReceived);
             _socket.Opened += new EventHandler(_socket_Opened);
             _socket.Open();
             _isWait = 1;
-            this.Wait();
+            this._wait();
         }
 
         public void Close()
@@ -42,16 +42,34 @@ namespace Net.DDP.Client
 
         void _socket_Opened(object sender, EventArgs e)
         {
-            this.Send("{\"msg\":\"connect\"}");
+            _socket.Send("{\"msg\": \"connect\",\"version\":\"1\",\"support\":[\"1\", \"pre1\"]}");
             _isWait = 0;
         }
-
-        void socket_MessageReceived(object sender, MessageReceivedEventArgs e)
+        
+        void _socket_MessageReceived(object sender, MessageReceivedEventArgs e)
         {
-            this._client.AddItem(e.Message);
+            if (! _handle_Ping(e.Message))
+            {
+                this._client.AddItem(e.Message);
+            }
         }
 
-        private void Wait()
+        bool _handle_Ping(string message)
+        {
+            if (message.Equals("{\"msg\":\"ping\"}"))
+            {
+                this._send_pong();
+                return true;
+            }
+            return false;
+        }
+
+        private void _send_pong()
+        {
+            _socket.Send("{\"msg\":\"pong\"}");
+        }
+
+        private void _wait()
         {
             while (_isWait != 0)
             {
