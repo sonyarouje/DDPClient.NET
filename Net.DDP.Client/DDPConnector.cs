@@ -14,13 +14,16 @@ namespace Net.DDP.Client
         private int _isWait = 0;
         private IClient _client;
 
+        private bool _keepAlive;
+
         public DDPConnector(IClient client)
         {
             this._client = client;
         }
 
-        public void Connect(string url)
+        public void Connect(string url, bool keepAlive = true)
         {
+            _keepAlive = keepAlive;
             _url = "ws://" + url + "/websocket";
             _socket = new WebSocket(_url);
             _socket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(_socket_MessageReceived);
@@ -56,19 +59,14 @@ namespace Net.DDP.Client
 
         bool _handle_Ping(string message)
         {
-            if (message.Equals("{\"msg\":\"ping\"}"))
+            if (_keepAlive && message.Equals("{\"msg\":\"ping\"}"))
             {
-                this._send_pong();
+                _socket.Send("{\"msg\":\"pong\"}");
                 return true;
             }
             return false;
         }
-
-        private void _send_pong()
-        {
-            _socket.Send("{\"msg\":\"pong\"}");
-        }
-
+        
         private void _wait()
         {
             while (_isWait != 0)
