@@ -9,8 +9,8 @@ namespace Net.DDP.Client
     {
         void AddItem(string jsonItem);
         void Connect(string url);
-        void Call(string methodName, string[] args);
-        int Subscribe(string methodName, string[] args);
+        void Call(string methodName, object[] args);
+        int Subscribe(string methodName, object[] args);
         int GetCurrentRequestId();
     }
 }
