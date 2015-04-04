@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using WebSocket4Net;
 
 namespace Net.DDP.Client
 {
@@ -55,22 +56,12 @@ namespace Net.DDP.Client
             return this.GetCurrentRequestId();
         }
 
-        private string CreateJSonArray(params string[] args)
+        public WebSocketState State
         {
-            if (args == null)
-                return string.Empty;
-
-            StringBuilder argumentBuilder = new StringBuilder();
-            string delimiter=string.Empty;
-            for (int i = 0; i < args.Length; i++)
-            {
-                argumentBuilder.Append(delimiter);
-                argumentBuilder.Append(string.Format("\"{0}\"",args[i]));
-                delimiter = ",";
-            }
-
-            return argumentBuilder.ToString();
+            get { return this._connector.State; }
         }
+
+       
         private int NextId()
         {
             return _uniqueId++;
