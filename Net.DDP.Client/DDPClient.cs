@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using WebSocket4Net;
 
 namespace Net.DDP.Client
 {
@@ -29,37 +31,37 @@ namespace Net.DDP.Client
             _connector.Connect(url);
         }
 
-        public void Call(string methodName, params string[] args)
+        public void Call(string methodName, params object[] args)
         {
-            string message = string.Format("\"msg\": \"method\",\"method\": \"{0}\",\"params\": [{1}],\"id\": \"{2}\"", methodName,this.CreateJSonArray(args), this.NextId().ToString());
-            message = "{" + message+ "}";
-            _connector.Send(message);
+            _connector.Send(JsonConvert.SerializeObject(new 
+                {
+                    msg = "method",
+                    method = methodName,
+                    @params = args,
+                    id = this.NextId().ToString()
+                }
+            ));
         }
 
-        public int Subscribe(string subscribeTo, params string[] args)
+        public int Subscribe(string subscribeTo, params object[] args)
         {
-            string message = string.Format("\"msg\": \"sub\",\"name\": \"{0}\",\"params\": [{1}],\"id\": \"{2}\"", subscribeTo,this.CreateJSonArray(args), this.NextId().ToString());
-            message = "{" + message + "}";
-            _connector.Send(message);
+            _connector.Send(JsonConvert.SerializeObject(new 
+                {
+                    msg = "sub",
+                    name = subscribeTo,
+                    @params = args,
+                    id = this.NextId().ToString()
+                }
+            ));
             return this.GetCurrentRequestId();
         }
 
-        private string CreateJSonArray(params string[] args)
+        public WebSocketState State
         {
-            if (args == null)
-                return string.Empty;
-
-            StringBuilder argumentBuilder = new StringBuilder();
-            string delimiter=string.Empty;
-            for (int i = 0; i < args.Length; i++)
-            {
-                argumentBuilder.Append(delimiter);
-                argumentBuilder.Append(string.Format("\"{0}\"",args[i]));
-                delimiter = ",";
-            }
-
-            return argumentBuilder.ToString();
+            get { return this._connector.State; }
         }
+
+       
         private int NextId()
         {
             return _uniqueId++;

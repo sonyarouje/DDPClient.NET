@@ -33,6 +33,11 @@ namespace Net.DDP.Client
             this._wait();
         }
 
+        public WebSocketState State
+        {
+            get { return this._socket == null ? WebSocketState.None : _socket.State; }
+        }
+
         public void Close()
         {
             _socket.Close();
