@@ -26,9 +26,9 @@ namespace Net.DDP.Client
             _queueHandler.AddItem(jsonItem);
         }
 
-        public void Connect(string url)
+        public void Connect(string url, bool useSsl = false)
         {
-            _connector.Connect(url);
+			_connector.Connect(url, useSsl: useSsl);
         }
 
         public void Call(string methodName, params object[] args)

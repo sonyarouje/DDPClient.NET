@@ -21,17 +21,21 @@ namespace Net.DDP.Client
             this._client = client;
         }
 
-        public void Connect(string url, bool keepAlive = true)
-        {
-            _keepAlive = keepAlive;
-            _url = "ws://" + url + "/websocket";
-            _socket = new WebSocket(_url);
-            _socket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(_socket_MessageReceived);
-            _socket.Opened += new EventHandler(_socket_Opened);
-            _socket.Open();
-            _isWait = 1;
-            this._wait();
-        }
+		public void Connect(string url, bool keepAlive = true, bool useSsl = false)
+		{
+			_keepAlive = keepAlive;
+			if (useSsl) {
+				_url = "wss://" + url + "/websocket";
+			} else {
+				_url = "ws://" + url + "/websocket";
+			}
+			_socket = new WebSocket(_url);
+			_socket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(_socket_MessageReceived);
+			_socket.Opened += new EventHandler(_socket_Opened);
+			_socket.Open();
+			_isWait = 1;
+			this._wait();
+		}
 
         public WebSocketState State
         {
