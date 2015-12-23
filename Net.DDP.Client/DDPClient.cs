@@ -28,7 +28,7 @@ namespace Net.DDP.Client
 
         public void Connect(string url, bool useSsl = false)
         {
-			_connector.Connect(url, useSsl: useSsl);
+            _connector.Connect(url, useSsl: useSsl);
         }
 
         public void Call(string methodName, params object[] args)
