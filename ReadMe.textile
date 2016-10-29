@@ -15,6 +15,11 @@ It is very easy with the help of DDPClient.NET. See the code below.
 		DDPClient client = new DDPClient(sub);
 
 		client.Connect("localhost:3000");
+		// or if you want to connect over SSL
+		// client.Connect("localhost:3000", true);
+		// or if you prefer a more explicit approach
+		// client.Connect("localhost:3000", useSsl: true);
+
 		client.Subscribe("allproducts");
 	}
 	
